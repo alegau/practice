@@ -1,2 +1,1 @@
-# practice
-random training files
+# random practice files
