@@ -1,0 +1,58 @@
+import datetime as dt
+import matplotlib.pyplot as plt
+from matplotlib import style
+import pandas as pd
+import pandas_datareader.data as web
+
+style.use('ggplot')
+pd.set_option('display.width', 500)
+
+
+start = dt.datetime(2020, 1, 14)
+end = dt.datetime.now()
+
+df = web.DataReader("IBM", 'yahoo', start, end)
+df2 = web.DataReader("AAPL", 'yahoo', start, end)
+df3 = web.DataReader("T", 'yahoo', start, end)
+
+
+df['Variation'] = df['Close'] - df['Open']
+df2['Variation'] = df2['Close'] - df2['Open']
+df3['Variation'] = df3['Close'] - df3['Open']
+
+df['Daily_Rise'] = df['Close'] > df['Open'] 
+df2['Daily_Rise'] = df2['Close'] > df2['Open']
+df3['Daily_Rise'] = df3['Close'] > df3['Open']
+
+df['Variation'] > 0.5
+df2['Variation'] > 0.5
+df3['Variation'] > 0.5
+
+
+print(df.describe())
+print(df2.describe())
+print(df3.describe())
+
+print(df.sort_values('Date', ascending=True))
+print(df2.sort_values('Date', ascending=True))
+print(df3.sort_values('Date', ascending=True))
+
+
+df[['High','Low']].plot()
+plt.title('I')
+plt.xlabel('Date')
+plt.ylabel('Value')
+plt.legend()
+
+df2[['High','Low']].plot()
+plt.title('A')
+plt.xlabel('Date')
+plt.ylabel('Value')
+plt.legend()
+
+df3[['High', 'Low']].plot()
+plt.title('Y')
+plt.xlabel('Date')
+plt.ylabel('Value')
+plt.legend()
+plt.show()
