@@ -1,0 +1,23 @@
+
+from sklearn import datasets
+data = datasets.load_boston()
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+from matplotlib import style
+
+
+df = pd.DataFrame(data.data, columns = data.feature_names)
+target = pd.DataFrame(data.target, columns = ["MEDV"])
+pd.set_option('display.width', 700)
+print(df)
+print(target)
+
+import statsmodels.api as sm
+X = df[["AGE", "LSTAT","PTRATIO"]]
+Y = target["MEDV"]
+X = sm.add_constant(X)
+
+model = sm.OLS(Y, X).fit()
+predictions = model.predict(X)
+model.summary()
